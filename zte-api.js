@@ -1,16 +1,10 @@
 const axios = require('axios');
 
-// Define the IP address and password (hardcoded)
-const ipAddress = "192.168.0.1";
-const password = "admin";
-
-// Function to encode string to base64
 function base64Encode(string) {
   return Buffer.from(string).toString('base64');
 }
 
-// Function for authentication
-async function auth() {
+async function auth(ipAddress, password) {
   try {
     const response = await axios.post(`http://${ipAddress}/goform/goform_set_cmd_process`, {
       isTest: 'false',
@@ -24,10 +18,6 @@ async function auth() {
         "Referer": `http://${ipAddress}/index.html`
       }
     });
-
-    //console.log("Authentication response data:", response.data);
-    //console.log("Authentication response headers:", response.headers);
-
     if (response.data.result !== "0") {
       throw new Error("Auth Error");
     }
@@ -38,8 +28,7 @@ async function auth() {
   }
 }
 
-// Function to get data from endpoint 1
-async function getData1(cookie) {
+async function getData1(cookie, ipAddress) {
   try {
     const response = await axios.get(`http://${ipAddress}/goform/goform_get_cmd_process`, {
       params: {
@@ -59,8 +48,7 @@ async function getData1(cookie) {
   }
 }
 
-// Function to get data from endpoint 2
-async function getData2(cookie) {
+async function getData2(cookie, ipAddress) {
   try {
     const response = await axios.get(`http://${ipAddress}/goform/goform_get_cmd_process`, {
       params: {
@@ -80,28 +68,27 @@ async function getData2(cookie) {
   }
 }
 
-// Main function to perform authentication and retrieve data
-async function main() {
+async function getModemInfo(ipAddress, password) {
   try {
-    console.log("Settings loaded:", { ipAddress, password });
-
-    const cookies = await auth();
-    console.log("Authenticated successfully:", cookies);
-
-    // Assuming getData1 and getData2 functions are similar to the Python script
-    // Implement those functions if not already done
-
-    const data1 = await getData1(cookies);
-    const data2 = await getData2(cookies);
-
-    console.log("Data from endpoint 1:", data1);
-    console.log("Data from endpoint 2:", data2);
-    console.log("SSID1:", data1.SSID1);
-
+    const cookies = await auth(ipAddress, password);
+    const data1 = await getData1(cookies, ipAddress);
+    const data2 = await getData2(cookies, ipAddress);
+    const combinedData = { ...data1, ...data2 };
+    return combinedData;    
   } catch (error) {
     console.error("An error occurred:", error.message);
   }
 }
 
 // Call main function
-main();
+const ip = "192.168.0.1";
+const pass = "admin";
+
+resultado = getModemInfo(ip, pass)
+  .then(result => {
+    console.log("Combined data:", result);
+  })
+  .catch(error => {
+    console.error("An error occurred:", error);
+  });
+
