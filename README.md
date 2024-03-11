@@ -5,5 +5,6 @@ A JavaScript library adapted from the Python version, designed for managing ZTE 
 
 
 
-
+Based on:
+https://github.com/pmcrwf-mid/ZTE-MF79U-api/blob/main/main.py
 
