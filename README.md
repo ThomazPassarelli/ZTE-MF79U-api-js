@@ -7,7 +7,7 @@ This library, adapted from the Python version, provides a comprehensive hardware
 
 **Usage Example:**
 ```javascript
-const ZTEapi = require('zte-mf79u-api');
+const ZTEapi = require('zte-api');
 
 // Example usage
 async function manageModem() {
