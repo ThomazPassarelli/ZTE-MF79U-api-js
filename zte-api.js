@@ -84,22 +84,3 @@ async function getModemInfo(ipAddress, password) {
 module.exports = {
   getModemInfo
 };
-
-// Call the test function with the desired IP address and password
-//const ipAddress = "192.168.0.1";
-//const password = "admin";
-//testModemInfo(ipAddress, password);
-
-
-// Call main function
-// const ip = "192.168.0.1";
-// const pass = "admin";
-
-// getModemInfo(ip, pass)
-//   .then(result => {
-//     console.log("Combined data:", result);
-//   })
-//   .catch(error => {
-//     console.error("An error occurred:", error);
-//   });
-
